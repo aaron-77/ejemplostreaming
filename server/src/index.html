@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Audio only stream example</title>
+
+    <script type="text/javascript" src="js/dash.all.debug.js"></script>
+    <!--dash.all.min.js should be used in production over dash.all.debug.js
+        Debug files are not compressed or obfuscated making the file size much larger compared with dash.all.min.js-->
+    <!--<script src="../../dist/dash.all.min.js"></script>-->
+
+    <script class="code">
+        function init() {
+            console.log("en el script");
+            var audio,
+                player,
+                url = "http://127.0.0.1:4000/canciones/thekillinghand/dash/index.mpd";
+            audio = document.querySelector("audio");
+            player = dashjs.MediaPlayer().create();
+            player.initialize(audio, url, true);
+    
+        }
+    </script>
+</head>
+<body>
+<div>
+    <audio autoplay="autoplay" controls></audio>
+    <div>clickeame </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        console.log("en el script2");
+        init();
+    });
+</script>
+<script src="js/highlighter.js"></script>
+</body>
+</html>

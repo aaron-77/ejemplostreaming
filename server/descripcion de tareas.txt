@@ -1,0 +1,12 @@
+la canciones solo se podran subir  por creadores de contenido
+el creador se logea
+se obtienen sus datos de usuario incluido sus datos de artista
+cuando el creador suba contenido envia los datos obtenidos al logearse
+
+
+el artista se crea cuando se da de alta
+
+los albumes se crean cuando el artista se logee y vaya a la gui para registrar albumnes
+ahi mismo abre la ventana para registrar canciones y las registra
+se manda la peticion d ecreacion de album con todo y canciones
+se segmentan todas la cacniones enviadas
