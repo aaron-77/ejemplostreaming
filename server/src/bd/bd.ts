@@ -13,6 +13,7 @@ const conexion = pool.then((r:any) => r.getConnection().then((connection:Bluebir
         console.log('Conexion exitosa.')
     })).catch((error)=>{
         console.log("error de conexion con la base de datos ");
+        console.log(error);
     });
     
 

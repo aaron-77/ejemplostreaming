@@ -13,7 +13,12 @@ class ArtistasManagerBd{
         console.log("2 :"+nombreArtistico);
         console.log("3 :"+fehaDeNacimeinto);
         console.log("4 :"+web);
+        try{
         (await pool).query('INSERT INTO artistas set ?',[req.body]);
+        }catch(Exception){
+
+            console.log(Exception.message);
+        }
         res.end("artista creado exitosamente");
         
 

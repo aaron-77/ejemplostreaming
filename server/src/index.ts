@@ -12,6 +12,7 @@ import * as global from './global';
 import * as multer from "multer";
 import {segmentador} from './segmentador/segmentador';
 import { AsyncLocalStorage } from "async_hooks";
+import { Http2SecureServer } from "http2";
 
 
 
@@ -22,8 +23,10 @@ let archivosssl = {
 }
 */
 
+//let server = app;
+let server = http.createServer(applicacion);
 
-var server = http.createServer(app);
+
 app.use(express.static('public'));
 
 
@@ -37,12 +40,14 @@ app.use((req, res, next) => {
 
 
 
-app.get('/', function (req, res) {
-    res.sendFile(path.resolve(__dirname, 'index.html'));
+app.get('/', (res) => {
+        console.log("Bienvenido a la raiz");
 
-});
+    });
 
 app.get('/canciones/thekillinghand', function (req, res) {
+    console.log("la ruta conciones funciona correctamente")
+    /*
     fs.readFile(path.join(__dirname, 'canciones.json'), 'utf8', function (err, canciones) {
         if (err) {
             throw err;
@@ -50,13 +55,13 @@ app.get('/canciones/thekillinghand', function (req, res) {
         res.json(JSON.parse(canciones));
 
     });
-
+    */
 });
-
-app.get('artistas/:nombre/:album/dash/:file', function (req, res) {
-
+//artistas/:nombre/:album/dash/:file
+app.get('/artistas/:nombre/:album/dash/:file', function (req, res) {
+    
     console.log("iniciando streaming");
-    var cancion = path.join(__dirname, 'artistas', req.params.nombre, req.params.album,'dash', req.params.file);
+    var cancion = path.join('..', 'artistas', req.params.nombre, req.params.album,'dash', req.params.file);
     let stream = fs
     let readStream = fs.createReadStream(cancion);
     console.log("a punto de streamear");
@@ -64,17 +69,18 @@ app.get('artistas/:nombre/:album/dash/:file', function (req, res) {
 
 
 });
-
-server.listen(4001, '192.168.100.2', function () {
-
-    console.log('aplcacion corriendo');
+const port = 4001;
+const ip = '192.168.100.2';
+server.listen(port, ip, function () {
+    console.log(__dirname);
+    console.log('aplcacion corriendo '+port+' '+ip);
     //var resultadoSegmentacion =  segmentador.segmentar("dreamtheather","whendreamanddayunite","orignal.mp3");
     //var rutascriptStream = path.join(__dirname,'generate-dash.sh');
     //var rutaCanciones = path.join(__dirname,'../','artistas','dreamtheater','whendreamanddayunite');
     
     /*exec(`${global.rutascriptStream} ${global.rutaCanciones}`, (err, stdout, stderr) => {
 
-        console.log(global.rutascriptStream);
+        console.log(globa l.rutascriptStream);
         console.log(global.rutaCanciones);
         console.log('ejecutando script');
         console.log(stderr);

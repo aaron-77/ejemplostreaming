@@ -43,7 +43,7 @@ var ArtistasManagerBd = /** @class */ (function () {
     }
     ArtistasManagerBd.prototype.crear = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var nombre, nombreArtistico, fehaDeNacimeinto, web;
+            var nombre, nombreArtistico, fehaDeNacimeinto, web, Exception_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -55,9 +55,18 @@ var ArtistasManagerBd = /** @class */ (function () {
                         console.log("2 :" + nombreArtistico);
                         console.log("3 :" + fehaDeNacimeinto);
                         console.log("4 :" + web);
-                        return [4 /*yield*/, bd_1["default"]];
+                        _a.label = 1;
                     case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, bd_1["default"]];
+                    case 2:
                         (_a.sent()).query('INSERT INTO artistas set ?', [req.body]);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        Exception_1 = _a.sent();
+                        console.log(Exception_1.message);
+                        return [3 /*break*/, 4];
+                    case 4:
                         res.end("artista creado exitosamente");
                         return [2 /*return*/];
                 }

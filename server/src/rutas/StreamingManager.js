@@ -36,69 +36,39 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.uploadcanciones = void 0;
+exports.streamingManager = void 0;
 var express_1 = require("express");
 var express = require("express");
-//var express = require('express');
-var cancionesManagerBd_1 = require("../bd/cancionesManagerBd");
-var multer = require("multer");
 var path = require("path");
-var segmentador_1 = require("../segmentador/segmentador");
-var UploadCancionesConfig = /** @class */ (function () {
-    function UploadCancionesConfig() {
-        this.storage = multer.diskStorage({
-            destination: function (req, file, cb) {
-                // let rutaDeGuardado = path.join('./artistas', req.params.nombreArtista, req.params.nombreAlbum);
-                var cancion = req.body.titulo;
-                var artista = req.body.nombreArtista;
-                var album = req.body.nombreAlbum;
-                console.log("cancion: " + cancion);
-                console.log("artista: " + artista);
-                console.log("album: " + album);
-                cb(null, "../artistas/" + artista + "/" + album);
-            },
-            filename: function (req, file, cb) {
-                var nombre = req.body.titulo;
-                cb(null, nombre + path.extname(file.originalname));
-            }
-        });
-        this.upload = multer({ storage: this.storage, limits: { filesize: 209800000 } });
+var fs = require("fs");
+var StreamingManager = /** @class */ (function () {
+    function StreamingManager() {
         this.router = express_1.Router();
         this.routes();
     }
-    UploadCancionesConfig.prototype.routes = function () {
+    StreamingManager.prototype.routes = function () {
         this.router.use(express.json());
-        this.router.use(this.upload.single('archivo'));
-        this.router.post('/subirArchivo', this.subirCancion);
+        this.router.get('/artistas/:nombre/:album/dash/:file', this.iniciarStreaming);
     };
-    UploadCancionesConfig.prototype.subirCancion = function (req, res, nextFunction) {
+    StreamingManager.prototype.iniciarStreaming = function (req, res, nextFunction) {
         return __awaiter(this, void 0, void 0, function () {
-            var cancionConExtesion, idArista, resultadoRegistrarCancionEnBd, resultadoSegmentarArchivo, error_1;
+            var cancion, stream, readStream;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        console.log("Artista2: " + req.params.nombreArtista);
-                        console.log("Album2 :" + req.params.nombreAlbum);
-                        cancionConExtesion = req.body.titulo + ".mp3";
-                        idArista = req.body.fkArtista;
-                        return [4 /*yield*/, cancionesManagerBd_1.cancionesManagerBd.crear(req, res)];
-                    case 1:
-                        resultadoRegistrarCancionEnBd = _a.sent();
-                        resultadoSegmentarArchivo = segmentador_1.segmentador.segmentar(req.body.nombreArtista, req.body.nombreAlbum, cancionConExtesion);
-                        console.log("archivo subido correctamente");
-                        res.status(200);
-                        res.end("peticion exitosa");
-                        return [3 /*break*/, 3];
-                    case 2:
-                        error_1 = _a.sent();
-                        console.log(error_1);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
+                try {
+                    console.log("iniciando streaming");
+                    cancion = path.join('..', 'artistas', req.params.nombre, req.params.album, 'dash', req.params.file);
+                    stream = fs;
+                    readStream = fs.createReadStream(cancion);
+                    console.log("a punto de streamear");
+                    readStream.pipe(res);
                 }
+                catch (error) {
+                    console.log("Error al streamear");
+                }
+                return [2 /*return*/];
             });
         });
     };
-    return UploadCancionesConfig;
+    return StreamingManager;
 }());
-exports.uploadcanciones = new UploadCancionesConfig().router;
+exports.streamingManager = new StreamingManager().router;

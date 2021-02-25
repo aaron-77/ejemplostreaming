@@ -37,8 +37,11 @@ class UploadArtistasConfig {
 
     async subirArtista(req: any, res: any, nextFunction: NextFunction) {
         try {
+            console.log(req);
             console.log("subir artista: "+req.body.nombre);
             var resultadoRegistrarCancionEnBd = await artistasManagerBd.crear(req, res);
+            console.log("respuesta: "+resultadoRegistrarCancionEnBd);
+            //res.end(resultadoRegistrarCancionEnBd);
 
         } catch (error) {
             console.log(error);

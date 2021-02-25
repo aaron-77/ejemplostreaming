@@ -8,5 +8,6 @@ var conexion = pool.then(function (r) { return r.getConnection().then(function (
     console.log('Conexion exitosa.');
 }); })["catch"](function (error) {
     console.log("error de conexion con la base de datos ");
+    console.log(error);
 });
 exports["default"] = pool;

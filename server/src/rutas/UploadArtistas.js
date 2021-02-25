@@ -64,10 +64,12 @@ var UploadArtistasConfig = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
+                        console.log(req);
                         console.log("subir artista: " + req.body.nombre);
                         return [4 /*yield*/, artistasManagerBd_1.artistasManagerBd.crear(req, res)];
                     case 1:
                         resultadoRegistrarCancionEnBd = _a.sent();
+                        console.log("respuesta: " + resultadoRegistrarCancionEnBd);
                         return [3 /*break*/, 3];
                     case 2:
                         error_1 = _a.sent();

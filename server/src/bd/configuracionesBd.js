@@ -4,8 +4,8 @@ exports["default"] = {
     database: {
         host: 'localhost',
         user: 'aaron',
-        password: 'terrabreak13',
-        database: 'arsmusicbd',
+        password: 'Terrabreak13',
+        database: 'LiberMusic',
         puerto: '3306'
     }
 };
