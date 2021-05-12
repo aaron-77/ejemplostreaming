@@ -6,4 +6,4 @@ Pasos para ejecutar el servidor e iniciar un streaming
 
 3.entrar en la carpeta server y dentro de ella entrar en la carpeta dist y ejecutar "node index.js"
 
-4.para probar el streaming enviar la url http://tuip:4001/artistas/dreamtheater/whendreamanddayunite/dash/index.js al reproductor de streaming dash y empezara la reproduccion
+4.para probar el streaming enviar la url http://tuip:4001/artistas/dreamtheater/whendreamanddayunite/dash/index.mpd al reproductor de streaming dash y empezara la reproduccion
